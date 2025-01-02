@@ -1,0 +1,64 @@
+/* 
+Dataset Loading and Overview: The code uses Seaborn to load the "tips" dataset, which contains information about restaurant tips. It then displays the first few rows, dataset structure, and statistical summary for an overview of the data.
+
+Histogram Plots: It creates histograms to visualize the distributions of total_bill and tip columns, including density estimates to understand their spread and peaks.
+
+Scatter Plot: A scatter plot is generated to analyze the relationship between total_bill and tip, with points color-coded by the sex of the customer for additional insights.
+
+Correlation Heatmap: The pairwise correlation between numerical columns is calculated and visualized using a heatmap to highlight relationships and dependencies within the dataset.
+
+Visualization Enhancements: The code uses descriptive titles, axis labels, and color palettes to make the visualizations intuitive and informative.
+*/
+
+
+
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+tips_data = sns.load_dataset('tips')
+
+# Display the first few rows
+print("First few rows of the dataset:")
+print(tips_data.head())
+
+# Display dataset information
+print("\nDataset information:")
+print(tips_data.info())
+
+# Display statistical summary
+print("\nStatistical summary of the dataset:")
+print(tips_data.describe())
+
+# Plot the distribution of total bills and tips
+plt.figure(figsize=(12, 6))
+
+plt.subplot(1, 2, 1)
+sns.histplot(tips_data['total_bill'], bins=20, kde=True, color='blue')
+plt.title('Distribution of Total Bill')
+
+plt.subplot(1, 2, 2)
+sns.histplot(tips_data['tip'], bins=20, kde=True, color='green')
+plt.title('Distribution of Tips')
+
+plt.tight_layout()
+plt.show()
+
+# Scatter plot of total bill vs tip
+plt.figure(figsize=(8, 6))
+sns.scatterplot(x='total_bill', y='tip', data=tips_data, hue='sex', palette='Set1')
+plt.title('Total Bill vs Tip')
+plt.xlabel('Total Bill ($)')
+plt.ylabel('Tip ($)')
+plt.legend(title='Sex')
+plt.show()
+
+# Correlation heatmap
+data_correlation = tips_data.corr()
+plt.figure(figsize=(8, 6))
+sns.heatmap(data_correlation, annot=True, cmap='coolwarm', vmin=-1, vmax=1)
+plt.title('Correlation Heatmap')
+plt.show()
